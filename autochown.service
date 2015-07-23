@@ -1,0 +1,8 @@
+[Unit]
+Description=Autochown
+
+[Service]
+ExecStart=/usr/bin/autochown /etc/autochownd.conf
+
+[Install]
+WantedBy=multi-user.target

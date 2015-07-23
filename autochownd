@@ -1,0 +1,62 @@
+#!/bin/bash
+
+source /etc/rc.conf
+source /etc/rc.d/functions
+
+confpath_="/etc/autochownd.conf"
+pidpath_="/run/autochownd.pid"
+
+# if ck_daemon; then... does not work as expected.
+if [[ -f /run/daemons/autochown ]]; then
+  _running=true
+else
+  _running=false
+fi
+
+case $1 in
+  start)
+    if $_running; then
+      printhl "Autochown Daemon is already running"
+      stat_fail
+    else
+      stat_busy "Starting Autochown Daemon"
+      autochown -d -p "$pidpath_" "$confpath_"
+      add_daemon autochown
+      stat_done
+    fi
+    ;;
+
+  stop)
+    if $_running; then
+      stat_busy "Stopping Autochown Daemon"
+      kill $(cat "$pidpath_") && rm "$pidpath_"
+      rm_daemon autochown
+      stat_done
+    else
+      printhl "Autochown Daemon is not running"
+      stat_fail
+    fi
+    ;;
+
+  restart)
+    "$0" stop
+    sleep 1
+    "$0" start
+    ;;
+
+  status)
+    stat_busy "Checking Autochown Daemon status";
+    ck_status autochown
+    ;;
+
+  *)
+    cat <<USAGE
+usage: $0 {start|stop|restart|status}
+
+The Autochown Daemon uses the autochown input file located at
+/etc/autochownd.conf. See man autochown(1) for details about
+the file format.
+USAGE
+
+esac
+exit 0

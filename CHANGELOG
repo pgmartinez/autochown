@@ -1,0 +1,34 @@
+# 2014-01-06
+* Passing `-v` twice will now print each path as it is scanned.
+
+# 2013-11-04
+* fixed bug that prevented configuration files with more than 10 targets
+
+# 2013-09-28
+* added "-x" option to limit recursion to a single device
+* updated code for new version of Rabbit Tree library
+
+# 2013-03-01
+* added previous user and group to verbose lchown output
+
+# 2013-02-13 (second session)
+* fixed regression bug that caused autochown to follow symlinks outside of target directory hierarchy
+* added multi-level verbosity (only 2 levels so far, maybe more later) - pass the `-v` flag multiple times
+
+# 2013-02-13
+* added per-filetype masks
+* added killmask
+* added killmask option `-k`
+* added dry run option `-n`
+
+# 2012-12-09
+* restructured logic in `main()` to avoid unintentional directory watches when using "-e" option
+
+# 2012-11-27
+* removed timestamp from output messages (should be handled by the system log)
+
+# 2012-11-25
+* added service file
+
+# 2012-09-20
+* corrected typo in man page and further clarified chmod behavior
